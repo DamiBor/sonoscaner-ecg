@@ -30,7 +30,6 @@ int main( int argc, char **argv )
 
     std::cout << "Loading ECG data in directory " << datapath << std::endl;
     EcgDataManager::readFromDirectory(datapath);
-    //EcgDataManager::readFromDirectory("E:\\Users\\Damien\\Documents\\Projets_persos\\Sonoscanner\\data");
     
     QApplication a( argc, argv );
 
