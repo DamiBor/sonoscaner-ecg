@@ -1,7 +1,11 @@
 To build this project : 
-- install Msys2 and mingw-w64 GCC : https://www.msys2.org/
-- install Git, mingw-w64-x86_64-cmake and mingw-w64-x86_64-ninja in your Msys2 environment
-- install Qt static libraries in Msys2 : https://wiki.qt.io/MSYS2
+- install latest version Msys2 and mingw-w64 GCC : https://www.msys2.org/
+- install following package in your Msys2 environment using pacman : 
+    - Git (used version 2.33.0)
+    - mingw-w64-x86_64-cmake (used version 3.21.3)
+    - mingw-w64-x86_64-ninja (used version 1.10.2)
+    - mingw-w64-x86_64-qt5-static (follow instructions here in case of problems : https://wiki.qt.io/MSYS2)
+    - mingw-w64-x86_64-gtest (used version 1.11.0)
 - open mingw-w64 shell of Msys2, clone this Git project into your HOME directory
 - build the project : 
     - mkdir build
@@ -9,4 +13,4 @@ To build this project :
     - cmake ..
     - ninja theECG
 - execute : 
-    - src/theECG.exe -data <full path to the directory containing ECG data>
+    - src/theECG.exe -data "data path"
