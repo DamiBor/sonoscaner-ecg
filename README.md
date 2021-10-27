@@ -11,6 +11,9 @@ To build this project :
     - mkdir build
     - cd build
     - cmake ..
-    - ninja theECG
+    - ninja all install
 - execute : 
     - src/theECG.exe -data "data path"
+- execute test
+    - cd test
+    - ./ECGTest.exe
