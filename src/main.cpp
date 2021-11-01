@@ -1,14 +1,16 @@
 #include "EcgDataManager.h"
+#include "EcgGraph.h"
 
 #include <iostream>
 #include <vector>
 #include <string>
 
 #include <qtwidgets/qapplication.h>
-#include <qtwidgets/qpushbutton.h>
+#include <qtwidgets/qlabel.h>
 
 int main( int argc, char **argv )
 {
+    // Handle command line option for ECG data path
     std::string datapath;
     for(int i = 0 ; i<argc ; i++)
     {
@@ -28,15 +30,24 @@ int main( int argc, char **argv )
         return 0;
     }
 
+    QApplication a( argc, argv );
+    QLabel loadingLabel("Loading data, please wait...", nullptr, Qt::Dialog);
+    loadingLabel.resize(200,60);
+    loadingLabel.show();
+
     std::cout << "Loading ECG data in directory " << datapath << std::endl;
     EcgDataManager::readFromDirectory(datapath);
     
-    QApplication a( argc, argv );
+    loadingLabel.hide();
+    
 
-    QPushButton hello( QString::number(EcgDataManager::_ecgData.size()), 0 );
-    hello.resize( 100, 30 );
+    QLabel loadedData(QString("Loaded ECG data with ")+QString::number(EcgDataManager::_ecgData.size())+QString(" points"), nullptr, Qt::Dialog);
+    loadedData.resize(200,60);
+    loadedData.show();
 
-    //a.setMainWidget( &hello );
-    hello.show();
+    EcgGraph theGraph(nullptr);
+    theGraph.resize(500, 500);
+    theGraph.show();
+
     return a.exec();
 }

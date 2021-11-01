@@ -28,6 +28,13 @@ public:
      */
     static void readFromDirectory(std::string directoryPath);
 
+    /**
+     * @brief Compute the minimun and maximum value within the ECG data vector and fill given parameter with them.
+     * @param min Parameter to fill with the minimum value in the data
+     * @param max Parameter to fill with the maximum value in the data
+     */
+    static void computeMinMax(int& min, int& max);
+
     static std::vector<short> _ecgData; /*! Vector containing all ECG values in chronological ordered  */
     
 };

@@ -63,3 +63,10 @@ void EcgDataManager::readFromDirectory(std::string directoryPath)
         std::cout << "EcgDataManager::readFromDirectory : given directory does not exist : " << directoryPath << std::endl;
     }
 }
+
+void EcgDataManager::computeMinMax(int& min, int& max)
+{
+    auto minMax = std::minmax_element(_ecgData.begin(), _ecgData.end());
+    min = *minMax.first;
+    max = *minMax.second;
+}
