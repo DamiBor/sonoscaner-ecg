@@ -41,6 +41,12 @@ public slots:
      */
     void changeAverageWindow(int windowSize);
 
+    /**
+     * @brief Change the scrolling speed of the graph
+     * @param speed Update frequency in Hz
+     */
+    void changeScrollingSpeed(int speed);
+
 private:
     /**
      * @brief Get the average value of ECG vlaue at given index, following the current average window.
@@ -59,4 +65,5 @@ private:
     int _avgWindowSize; /*! Size of the average window used to compute displayed values, in number of values. */
 
     QTimer _timer; /*! Timer to trig graph update at the requested frequency. */
+    int _scrollingSpeed; /*! Scrolling speed of the graph (speed of the insertion of points in the graph), corresponding to the timer interval, in ms. */
 };

@@ -64,12 +64,23 @@ int main( int argc, char **argv )
     averageWindow.setValue(1);
     averageWindow.setSingleStep(2);
     buttonBar.addWidget(&averageWindow);
+
+    QLabel speedLabel("Scrolling speed (Hz): ");
+    buttonBar.addWidget(&speedLabel);
+
+    QSpinBox speed;
+    speed.setMinimum(1);
+    speed.setMaximum(1000);
+    speed.setValue(500);
+    speed.setSingleStep(100);
+    buttonBar.addWidget(&speed);
     
     // ECG graph
     EcgGraph theGraph;
     layout.addWidget(&theGraph);
     QObject::connect(&playPause,SIGNAL(pressed()),&theGraph,SLOT(playPause()));
     QObject::connect(&averageWindow,SIGNAL(valueChanged(int)),&theGraph,SLOT(changeAverageWindow(int)));
+    QObject::connect(&speed,SIGNAL(valueChanged(int)),&theGraph,SLOT(changeScrollingSpeed(int)));
 
     mainWindow.show();
 

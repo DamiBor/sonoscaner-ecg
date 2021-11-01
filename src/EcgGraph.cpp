@@ -7,12 +7,11 @@
 
 #include <iostream>
 
-EcgGraph::EcgGraph(QWidget *parent) : QWidget(parent), _startIndex(0), _pointNb(0), _maxPointNb(3000), _avgWindowSize(1)
+EcgGraph::EcgGraph(QWidget *parent) : QWidget(parent), _startIndex(0), _pointNb(0), _maxPointNb(3000), _avgWindowSize(1),_scrollingSpeed(2)
 {
     EcgDataManager::computeMinMax(_dataMin, _dataMax);
     
     connect(&_timer,SIGNAL(timeout()),this,SLOT(updateGraph()));
-    _timer.start(2);
 }
 
 qreal EcgGraph::getAverageECGValue(int index)
@@ -73,7 +72,7 @@ void EcgGraph::playPause()
     }
     else
     {
-        _timer.start(2);
+        _timer.start(_scrollingSpeed);
     }
 }
 
@@ -81,6 +80,15 @@ void EcgGraph::changeAverageWindow(int windowSize)
 {
     _avgWindowSize = windowSize;
     this->update();
+}
+
+void EcgGraph::changeScrollingSpeed(int speed)
+{
+    if(speed > 0)
+    {
+        _scrollingSpeed = 1000 / speed;
+        _timer.setInterval(_scrollingSpeed);
+    }
 }
 
 void EcgGraph::updateGraph()

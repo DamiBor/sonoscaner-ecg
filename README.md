@@ -15,7 +15,8 @@ To build this project :
 - execute : 
     - src/theECG.exe -data "data path"
     - press the Play/Pause button to start or stop the graph update
-    - a spin bow allow you to change the average window size, defining the number of ECG values to compute the displayed average values
+    - a spin box allows you to change the average window size, defining the number of ECG values to compute the displayed average values
+    - a spin box allows you to define the graph update frequency in hertz (from 1 Hz to 1000 Hz) to change the speed of point insertion in the graphe from 1 per ms to 1 per second
 - execute test
     - cd test
     - ./ECGTest.exe
