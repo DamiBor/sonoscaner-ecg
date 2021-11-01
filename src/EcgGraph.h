@@ -24,6 +24,12 @@ public:
      */
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
+    /**
+     * @brief Redifinition to the key press event handling to handle Play/Pause inputs
+     * @param event Key pressed event to handle
+     */
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+
 public slots:
     /**
      * @brief Slot to call to update the graph with a new point
