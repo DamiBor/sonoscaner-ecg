@@ -7,6 +7,7 @@
 
 #include <qtwidgets/qapplication.h>
 #include <qtwidgets/qlabel.h>
+#include <qtwidgets/qspinbox.h>
 #include <qtwidgets/qpushbutton.h>
 #include <qtwidgets/QHBoxLayout>
 #include <qtwidgets/QVBoxLayout>
@@ -54,11 +55,21 @@ int main( int argc, char **argv )
     
     QPushButton playPause("Play/Pause");
     buttonBar.addWidget(&playPause);
+
+    QLabel averageLabel("Average window size: ");
+    buttonBar.addWidget(&averageLabel);
+
+    QSpinBox averageWindow;
+    averageWindow.setMinimum(1);
+    averageWindow.setValue(1);
+    averageWindow.setSingleStep(2);
+    buttonBar.addWidget(&averageWindow);
     
     // ECG graph
     EcgGraph theGraph;
     layout.addWidget(&theGraph);
     QObject::connect(&playPause,SIGNAL(pressed()),&theGraph,SLOT(playPause()));
+    QObject::connect(&averageWindow,SIGNAL(valueChanged(int)),&theGraph,SLOT(changeAverageWindow(int)));
 
     mainWindow.show();
 

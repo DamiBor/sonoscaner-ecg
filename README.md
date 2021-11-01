@@ -15,6 +15,7 @@ To build this project :
 - execute : 
     - src/theECG.exe -data "data path"
     - press the Play/Pause button to start or stop the graph update
+    - a spin bow allow you to change the average window size, defining the number of ECG values to compute the displayed average values
 - execute test
     - cd test
     - ./ECGTest.exe

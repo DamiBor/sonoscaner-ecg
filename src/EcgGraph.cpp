@@ -7,12 +7,28 @@
 
 #include <iostream>
 
-EcgGraph::EcgGraph(QWidget *parent) : QWidget(parent), _startIndex(0), _pointNb(0), _maxPointNb(3000)
+EcgGraph::EcgGraph(QWidget *parent) : QWidget(parent), _startIndex(0), _pointNb(0), _maxPointNb(3000), _avgWindowSize(1)
 {
     EcgDataManager::computeMinMax(_dataMin, _dataMax);
     
     connect(&_timer,SIGNAL(timeout()),this,SLOT(updateGraph()));
     _timer.start(2);
+}
+
+qreal EcgGraph::getAverageECGValue(int index)
+{
+    // Define range of value to consider
+    int beginIndex = std::max(index - ((_avgWindowSize-1)/2), 0);
+    int endIndex = std::min(index + ((_avgWindowSize-1)/2), static_cast<int>(EcgDataManager::_ecgData.size())-1);
+
+    int sum = 0;
+    for(int i=beginIndex; i<=endIndex ; ++i)
+    {
+        sum += EcgDataManager::_ecgData.at(i);
+    }
+
+    qreal average = static_cast<qreal>(sum) / static_cast<qreal>((endIndex-beginIndex+1));
+    return average;
 }
 
 void EcgGraph::paintEvent(QPaintEvent *event)
@@ -29,14 +45,14 @@ void EcgGraph::paintEvent(QPaintEvent *event)
         qreal yInterval = (this->height()/2.0f) / std::max(std::abs(_dataMin), std::abs(_dataMax));
 
         QPainterPath path;
-        short currentValue = EcgDataManager::_ecgData.at(_startIndex);
+        qreal currentValue = getAverageECGValue(_startIndex);
         qreal xPos = 0;
         qreal yPos = zeroYPos + (currentValue * yInterval);
         path.moveTo(xPos,yPos);
 
         for(int i = _startIndex + 1 ; i<_startIndex + _pointNb - 1 ; ++i)
         {
-            currentValue = EcgDataManager::_ecgData.at(i);
+            currentValue = getAverageECGValue(i);
             xPos += xInterval;
             yPos = zeroYPos + (currentValue * yInterval);
             path.lineTo(xPos,yPos);
@@ -59,6 +75,12 @@ void EcgGraph::playPause()
     {
         _timer.start(2);
     }
+}
+
+void EcgGraph::changeAverageWindow(int windowSize)
+{
+    _avgWindowSize = windowSize;
+    this->update();
 }
 
 void EcgGraph::updateGraph()
