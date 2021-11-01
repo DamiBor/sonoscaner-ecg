@@ -14,7 +14,7 @@ To build this project :
     - ninja all install
 - execute : 
     - src/theECG.exe -data "data path"
-    - on the graph window, you can Play/Pause the ECG by pressing the space bar
+    - press the Play/Pause button to start or stop the graph update
 - execute test
     - cd test
     - ./ECGTest.exe

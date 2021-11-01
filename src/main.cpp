@@ -7,6 +7,9 @@
 
 #include <qtwidgets/qapplication.h>
 #include <qtwidgets/qlabel.h>
+#include <qtwidgets/qpushbutton.h>
+#include <qtwidgets/QHBoxLayout>
+#include <qtwidgets/QVBoxLayout>
 
 int main( int argc, char **argv )
 {
@@ -39,15 +42,25 @@ int main( int argc, char **argv )
     EcgDataManager::readFromDirectory(datapath);
     
     loadingLabel.hide();
+
+    // We define the window and its layout here, but it's a bit ugly
+    QWidget mainWindow;
+    mainWindow.resize(500, 500);
+    QVBoxLayout layout(&mainWindow);
+
+    // Button bar
+    QHBoxLayout buttonBar;
+    layout.addLayout(&buttonBar);
     
+    QPushButton playPause("Play/Pause");
+    buttonBar.addWidget(&playPause);
+    
+    // ECG graph
+    EcgGraph theGraph;
+    layout.addWidget(&theGraph);
+    QObject::connect(&playPause,SIGNAL(pressed()),&theGraph,SLOT(playPause()));
 
-    QLabel loadedData(QString("Loaded ECG data with ")+QString::number(EcgDataManager::_ecgData.size())+QString(" points"), nullptr, Qt::Dialog);
-    loadedData.resize(200,60);
-    loadedData.show();
-
-    EcgGraph theGraph(nullptr);
-    theGraph.resize(500, 500);
-    theGraph.show();
+    mainWindow.show();
 
     return a.exec();
 }

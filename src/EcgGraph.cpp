@@ -12,6 +12,7 @@ EcgGraph::EcgGraph(QWidget *parent) : QWidget(parent), _startIndex(0), _pointNb(
     EcgDataManager::computeMinMax(_dataMin, _dataMax);
     
     connect(&_timer,SIGNAL(timeout()),this,SLOT(updateGraph()));
+    _timer.start(2);
 }
 
 void EcgGraph::paintEvent(QPaintEvent *event)
@@ -43,33 +44,20 @@ void EcgGraph::paintEvent(QPaintEvent *event)
 
         painter.drawPath(path);
     }
-    
+
     QWidget::paintEvent(event);
     painter.end();
 }
 
-void EcgGraph::keyPressEvent(QKeyEvent *event)
+void EcgGraph::playPause()
 {
-    switch(event->key())
+    if(_timer.isActive())
     {
-        case Qt::Key_Space:
-        {
-            if(_timer.isActive())
-            {
-                _timer.stop();
-            }
-            else
-            {
-                _timer.start(2);
-            }
-            break;
-        }
-
-        default:
-        {
-            QWidget::keyPressEvent(event);
-            break;
-        }
+        _timer.stop();
+    }
+    else
+    {
+        _timer.start(2);
     }
 }
 

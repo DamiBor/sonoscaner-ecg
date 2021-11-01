@@ -24,17 +24,16 @@ public:
      */
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
-    /**
-     * @brief Redifinition to the key press event handling to handle Play/Pause inputs
-     * @param event Key pressed event to handle
-     */
-    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
-
 public slots:
     /**
      * @brief Slot to call to update the graph with a new point
      */
     void updateGraph();
+
+    /**
+     * @brief Play or pause the timer that update the graph.
+     */
+    void playPause();
 
 private:
     unsigned int _startIndex; /*! Index of the first point of the ECG data vector to draw on the graph. */
